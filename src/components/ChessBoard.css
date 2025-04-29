@@ -1,0 +1,64 @@
+/* src/components/ChessBoard.css */
+.square {
+  width: 4rem; /* 16 × 0.25rem */
+  height: 4rem; /* 16 × 0.25rem */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 42px;
+  box-sizing: border-box;
+}
+
+.trun-title{
+  padding-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.capitalize:first-letter{
+  text-transform: capitalize;
+}
+
+.selected-square{
+  border: 3px solid yellow;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.white {
+  background-color: white;
+}
+
+.dark {
+  background-color: #545454; /* Dark gray color */
+}
+
+.valid-move {
+  background-color: lightgreen;
+}
+
+.capture-move {
+  border: 3px solid red;
+}
+
+/* This ensures the rows are stacked vertically */
+.row {
+  display: flex;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  width: 510px;
+  margin: auto;
+  justify-content: center;
+  background: #a99a86;
+  padding: 28px;
+  padding-top: 6px;
+}
+
