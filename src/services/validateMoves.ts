@@ -16,9 +16,11 @@ export const getValidMoves = (board: (Piece | null)[][], fromRow: number, fromCo
     validMoves = rookValidation(piece, board, fromRow, fromCol);
   } else if (piece.type === 'queen') {
     validMoves = queenValidation(piece, board, fromRow, fromCol);
-  } else if (piece.type === 'king' && checkKingSafety) {
-    validMoves = kingValidation(piece, board, fromRow, fromCol, castlingRights);
-  }  
+  }  else if (piece.type === 'king') {
+    validMoves = checkKingSafety
+    ? kingValidation(piece, board, fromRow, fromCol, castlingRights)
+    : kingAttackSquares(piece, board, fromRow, fromCol);
+  }
 
   if (checkKingSafety) {
     validMoves = validMoves.filter(move => {
@@ -222,6 +224,20 @@ export const isCheckmate = (
     const rookMoves = rookValidation(piece, board, fromRow, fromCol);
     const bishopMoves = bishopValidation(piece, board, fromRow, fromCol);
     return [...rookMoves, ...bishopMoves];
+  };
+
+    const kingAttackSquares = (piece: Piece, board: (Piece | null)[][], fromRow: number, fromCol: number): ValidMoves => {
+    const moves: ValidMoves = [];
+    for (let dr = -1; dr <= 1; dr++) {
+      for (let dc = -1; dc <= 1; dc++) {
+        if (dr === 0 && dc === 0) continue;
+        const r = fromRow + dr, c = fromCol + dc;
+        if (r < 0 || r > 7 || c < 0 || c > 7) continue;
+        const t = board[r][c];
+        if (!t || t.color !== piece.color) moves.push({ row: r, col: c });
+      }
+    }
+    return moves;
   };
 
   const kingValidation = (piece: Piece, board: (Piece | null)[][], fromRow: number, fromCol: number, castlingRights:CastlingRights): ValidMoves => {
